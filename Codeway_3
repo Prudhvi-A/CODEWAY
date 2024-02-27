@@ -1,0 +1,37 @@
+import random
+import string
+
+def generate_password(length):
+    lowercase_letters = string.ascii_lowercase
+    uppercase_letters = string.ascii_uppercase
+    digits = string.digits
+    symbols = string.punctuation
+
+    # Ensure at least one character from each category
+    password = [random.choice(lowercase_letters),
+                random.choice(uppercase_letters),
+                random.choice(digits),
+                random.choice(symbols)]
+
+    # Fill the rest of the password with random characters
+    password.extend(random.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(length - 4))
+
+    # Shuffle the password to make the order of characters random
+    random.shuffle(password)
+
+    return ''.join(password)
+
+def main():
+    print("Welcome to Prudhvi's Password Generator!")
+    try:
+        length = int(input("Enter the desired length of the password: "))
+        if length <= 4:
+            print("Length must be greater than 4.")
+            return
+        password = generate_password(length)
+        print("Generated Password:", password)
+    except ValueError:
+        print("Invalid input. Please enter a valid integer.")
+
+if __name__ == "__main__":
+    main()
