@@ -1,0 +1,120 @@
+class Task:
+    def __init__(self, name, deadline=None, category=None):
+        self.name = name
+        self.deadline = deadline
+        self.category = category
+
+    def __str__(self):
+        task_str = f"Task: {self.name}"
+        if self.deadline:
+            task_str += f" (Deadline: {self.deadline})"
+        if self.category:
+            task_str += f" [Category: {self.category}]"
+        return task_str
+
+class ToDoList:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, task):
+        self.tasks.append(task)
+        print("Task added successfully!")
+
+    def list_tasks(self):
+        if not self.tasks:
+            print("No tasks found.")
+        else:
+            print("Tasks:")
+            for index, task in enumerate(self.tasks, start=1):
+                print(f"{index}. {task}")
+
+    def edit_task(self, task_index, new_name):
+        try:
+            task_index = int(task_index)
+            if 1 <= task_index <= len(self.tasks):
+                self.tasks[task_index - 1].name = new_name
+                print("Task edited successfully.")
+            else:
+                print("Invalid task index.")
+        except ValueError:
+            print("Invalid input. Please enter a valid task index.")
+
+    def set_deadline(self, task_index, deadline):
+        try:
+            task_index = int(task_index)
+            if 1 <= task_index <= len(self.tasks):
+                self.tasks[task_index - 1].deadline = deadline
+                print("Deadline set successfully.")
+            else:
+                print("Invalid task index.")
+        except ValueError:
+            print("Invalid input. Please enter a valid task index.")
+
+    def set_category(self, task_index, category):
+        try:
+            task_index = int(task_index)
+            if 1 <= task_index <= len(self.tasks):
+                self.tasks[task_index - 1].category = category
+                print("Category set successfully.")
+            else:
+                print("Invalid task index.")
+        except ValueError:
+            print("Invalid input. Please enter a valid task index.")
+
+    def complete_task(self, task_index):
+        try:
+            task_index = int(task_index)
+            if 1 <= task_index <= len(self.tasks):
+                del self.tasks[task_index - 1]
+                print("Task marked as complete.")
+            else:
+                print("Invalid task index.")
+        except ValueError:
+            print("Invalid input. Please enter a valid task index.")
+
+def main():
+    print("Welcome To Prudhvi's To Do List...")
+    todo_list = ToDoList()
+    while True:
+        print("\nMenu:")
+        print("1. Add Task")
+        print("2. List Tasks")
+        print("3. Edit Task")
+        print("4. Set Deadline for Task")
+        print("5. Set Category for Task")
+        print("6. Mark Task as Complete")
+        print("7. Quit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            task_name = input("Enter task name: ")
+            deadline = input("Enter deadline (optional): ")
+            category = input("Enter category (optional): ")
+            task = Task(task_name, deadline, category)
+            todo_list.add_task(task)
+        elif choice == "2":
+            todo_list.list_tasks()
+        elif choice == "3":
+            task_index = input("Enter task index to edit: ")
+            new_name = input("Enter new task name: ")
+            todo_list.edit_task(task_index, new_name)
+        elif choice == "4":
+            task_index = input("Enter task index to set deadline for: ")
+            deadline = input("Enter deadline: ")
+            todo_list.set_deadline(task_index, deadline)
+        elif choice == "5":
+            task_index = input("Enter task index to set category for: ")
+            category = input("Enter category: ")
+            todo_list.set_category(task_index, category)
+        elif choice == "6":
+            task_index = input("Enter task index to mark as complete: ")
+            todo_list.complete_task(task_index)
+        elif choice == "7":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please enter a valid option.")
+
+if __name__ == "__main__":
+    main()
